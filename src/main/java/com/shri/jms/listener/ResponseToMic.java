@@ -37,6 +37,8 @@ public class ResponseToMic {
                 .uuid(UUID.randomUUID())
                 .message("Dummy class is receiving messages")
                 .build();
+        //example to use Spring Message type
+        // jmsTemplate.convertAndSend((Destination) springMessage.getHeaders().get("jms_replyTo"), "got it!");
         jmsTemplate.convertAndSend(message.getJMSReplyTo(), payload);
         log.info("<<<<< " + dummyClass.toString());
     }

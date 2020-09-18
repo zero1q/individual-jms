@@ -42,20 +42,17 @@ public class CheckMic {
                 .uuid(UUID.randomUUID())
                 .message("Dummy class is sending messages")
                 .build();
-        Message message = template.sendAndReceive(ActiveMQConfig.SEND_AND_RECEIVE_QUEUE, new MessageCreator() {
-            @Override
-            public Message createMessage(Session session) throws JMSException {
-                Message micCheck = null;
+        Message message = template.sendAndReceive(ActiveMQConfig.SEND_AND_RECEIVE_QUEUE, session -> {
+            Message micCheck = null;
 
-                try {
-                    session.createTextMessage(objectMapper.writeValueAsString(obj));
-                    micCheck.setStringProperty("_type", "com.shri.jms.model.DummyClass");
-                    log.info(">>>>> sending ...");
-                    return micCheck;
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                    throw new JMSException("Exception occurred");
-                }
+            try {
+                micCheck = session.createTextMessage(objectMapper.writeValueAsString(obj));
+                micCheck.setStringProperty("_type", "com.shri.jms.model.DummyClass");
+                log.info(">>>>> sending ...");
+                return micCheck;
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                throw new JMSException("Exception occurred");
             }
         });
         log.info(">>>>> " + message.getBody(String.class));
