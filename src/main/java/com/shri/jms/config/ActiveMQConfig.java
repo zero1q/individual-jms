@@ -18,6 +18,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration
 public class ActiveMQConfig {
 
+    public static final String MY_QUEUE = "dummy_class";
+
     @Bean
     public void embeddedServerConfig() throws Exception {
         ActiveMQServer server = ActiveMQServers.newActiveMQServer(new ConfigurationImpl()
