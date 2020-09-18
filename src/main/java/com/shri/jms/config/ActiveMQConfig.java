@@ -19,6 +19,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class ActiveMQConfig {
 
     public static final String MY_QUEUE = "dummy_class";
+    public static final String SEND_AND_RECEIVE_QUEUE = "acknowledge-me-back";
 
     @Bean
     public void embeddedServerConfig() throws Exception {
